@@ -12,7 +12,7 @@
 					<button name="export_data" string="Compelete" type="object" icon="gtk-ok" />
 				</group>
 				<group states="done">
-					<field name="export_data_wizard_data" colspan="8" />
+					<field name="export_data_wizard_data" filename="name" colspan="8" />
 					<button special="cancel" string="Close" icon="gtk-ok" />
 				</group>
 			</field>
