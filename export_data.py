@@ -1,5 +1,4 @@
 from osv import osv, fields
-import cStringIO
 import base64
 
 
@@ -10,10 +9,7 @@ class ExportDataWizard(osv.osv_memory):
     def export_data(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids, context=context)[0]
         this.name = '%s.json' % this.export_data_wizard_class_name
-        buf = cStringIO.StringIO()
-        buf.write("durud bar to bad")
-        out = base64.encodestring(buf.getvalue())
-        buf.close()
+        out = base64.encodestring("durud bar to sds")
         return self.write(cr, uid, ids, {
             'state': 'done', 'export_data_wizard_data': out,
             'name': this.name
@@ -21,8 +17,7 @@ class ExportDataWizard(osv.osv_memory):
 
     _columns = {
         'name': fields.char('Filename', size=16, readonly=True),
-        'export_data_wizard_class_name': fields.char(
-            'Export Data Wizard Class Name', size=64),
+        'ir_model_id': fields.many2one('ir.model', 'IR Model'),
         'export_data_wizard_data': fields.binary('Export Data Wizard Data',
                                                  readonly=True),
         'state': fields.selection([('init', 'init'), ('done', 'done')],
