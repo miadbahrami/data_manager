@@ -11,17 +11,11 @@ class ExportDataWizard(osv.osv_memory):
         this = self.browse(cr, uid, ids, context=context)[0]
         model_name = this.ir_model_id.model
 
-        # Generating file name
-        this.name = "%s_data.xml" % model_name.replace('.', '_')
-
         input_model_obj = self.pool.get(model_name)
         input_model_id_list = input_model_obj.search(cr, uid, [],
                                                      context=context)
-#        input_model_list = input_model_obj.browse(cr, uid, input_model_id_list,
-#                                                  context=context)
         input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
                                                 [], context=context)
-
 
         # Creating XML
         openerp_tag = etree.Element('openerp')
@@ -43,11 +37,11 @@ class ExportDataWizard(osv.osv_memory):
 
         return self.write(cr, uid, ids, {
             'state': 'done', 'export_data_wizard_data': out,
-            'name': this.name
+            'name': "%s_data.xml" % model_name.replace('.', '_')
         }, context=context)
 
     _columns = {
-        'name': fields.char('Filename', size=16, readonly=True),
+        'name': fields.char('Filename', size=128, readonly=True),
         'ir_model_id': fields.many2one('ir.model', 'IR Model'),
         'export_data_wizard_data': fields.binary('Export Data Wizard Data',
                                                  readonly=True),
