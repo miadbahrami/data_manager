@@ -27,7 +27,13 @@ class ExportDataWizard(osv.osv_memory):
 
         for input_model in input_model_list:
             record_tag = etree.SubElement(data_tag, 'record')
-            record_tag.attrib['id'] = "%s_%s" % (model_name.replace('.', '_'), input_model.id)
+            record_tag.attrib['id'] = "%s_%s" % (model_name.replace('.', '_'),
+                                                 input_model.id)
+            record_tag.attrib['model'] = model_name
+
+            for ir_model_field in this.ir_model_id.field_id:
+                field_tag = etree.SubElement(record_tag, 'field')
+                field_tag.attrib['name'] = ir_model_field.name
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
