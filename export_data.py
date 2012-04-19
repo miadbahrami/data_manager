@@ -14,12 +14,19 @@ class ExportDataWizard(osv.osv_memory):
         # Generating file name
         this.name = "%s_data.xml" % model_name.replace('.', '_')
 
+        input_model_obj = self.pool.get(model_name)
+        input_model_id_list = input_model_obj.search(cr, uid, [],
+                                                     context=context)
+        input_model_list = input_model_obj.browse(cr, uid, input_model_id_list,
+                                             context=context)
+
         # Creating XML
         openerp_tag = etree.Element('openerp')
         data_tag = etree.SubElement(openerp_tag, 'data')
         data_tag.attrib['noupdate'] = "1"
 
-
+        for input_model in input_model_list:
+            pass
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
