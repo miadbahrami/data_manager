@@ -1,6 +1,7 @@
 from osv import osv, fields
 import base64
 from lxml import etree
+from tools.translate import _
 
 
 class ExportDataWizard(osv.osv_memory):
@@ -31,7 +32,33 @@ class ExportDataWizard(osv.osv_memory):
             for ir_model_field in this.ir_model_id.field_id:
                 field_tag = etree.SubElement(record_tag, 'field')
                 field_tag.attrib['name'] = ir_model_field.name
-                field_tag.text = str(input_model[ir_model_field.name])
+
+                if ir_model_field.ttype not in ['one2many', 'many2many']:
+                    if ir_model_field.ttype == 'many2one':
+                        temp_object_obj = self.pool.get(ir_model_field.model)
+                        temp_object_id = input_model[ir_model_field.name][0]
+                        temp_object = temp_object_obj.browse(cr, uid,
+                                                             temp_object_id,
+                                                             context=context)
+                        temp_object_rel_name = temp_object._model._columns[ir_model_field.name]._obj
+                        temp_object_rel_obj = self.pool.get(temp_object_rel_name)
+                        temp_object_rel = temp_object_rel_obj.browse(
+                            cr, uid, input_model[ir_model_field.name][0])
+
+                        try:
+                            temp_iso_code = temp_object_rel.iso_code
+
+                        except AttributeError:
+                            raise osv.except_osv(
+                                (_('Warning')),
+                                (_("%s class doesn't have iso_code field!" %
+                                   ir_model_field.model)))
+
+                        field_tag.attrib['search'] = "[('iso_code', '=', %s)]" % temp_iso_code
+                        field_tag.attrib['model'] = temp_object_rel_name
+
+                    else:
+                        field_tag.text = str(input_model[ir_model_field.name])
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
