@@ -58,7 +58,7 @@ class ExportDataWizard(osv.osv_memory):
                         field_tag.attrib['model'] = temp_object_rel_name
 
                     else:
-                        field_tag.text = str(input_model[ir_model_field.name])
+                        field_tag.text = unicode(input_model[ir_model_field.name])
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
