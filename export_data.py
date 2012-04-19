@@ -18,7 +18,7 @@ class ExportDataWizard(osv.osv_memory):
         input_model_id_list = input_model_obj.search(cr, uid, [],
                                                      context=context)
         input_model_list = input_model_obj.browse(cr, uid, input_model_id_list,
-                                             context=context)
+                                                  context=context)
 
         # Creating XML
         openerp_tag = etree.Element('openerp')
@@ -26,7 +26,8 @@ class ExportDataWizard(osv.osv_memory):
         data_tag.attrib['noupdate'] = "1"
 
         for input_model in input_model_list:
-            pass
+            record_tag = etree.SubElement(data_tag, 'record')
+            record_tag.attrib['id'] = "%s_%s" % (model_name.replace('.', '_'), input_model.id)
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
