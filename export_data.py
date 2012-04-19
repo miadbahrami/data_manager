@@ -1,5 +1,6 @@
 from osv import osv, fields
 import base64
+from lxml import etree
 
 
 class ExportDataWizard(osv.osv_memory):
@@ -7,30 +8,20 @@ class ExportDataWizard(osv.osv_memory):
     _inherit = 'ir.wizard.screen'
 
     def export_data(self, cr, uid, ids, context=None):
-        generated_content = []
-        generated_dict = {}
-        generated_fields = {}
         this = self.browse(cr, uid, ids, context=context)[0]
         model_name = this.ir_model_id.model
-        model_field_list = this.ir_model_id.field_id
 
-        for model_field in model_field_list:
-            if model_field.ttype in ['char', 'integer', 'many2one', 'float', 'date', 'time', 'datetime']:
-                generated_fields[model_field.name] = None
+        # Generating file name
+        this.name = "%s_data.xml" % model_name.replace('.', '_')
 
-        current_obj = self.pool.get(model_name)
-        current_obj_id_list = current_obj.search(cr, uid, [], context=context)
-        current_list = current_obj.browse(cr, uid, current_obj_id_list, context=context)
-        this.name = "%s.py" % model_name
+        # Creating XML
+        openerp_tag = etree.Element('openerp')
+        data_tag = etree.SubElement(openerp_tag, 'data')
+        data_tag.attrib['noupdate'] = "1"
 
-        for current in current_list:
-            generated_dict['pk'] = current.id
-            generated_dict['model'] = model_name
-            generated_dict['fields'] = generated_fields
 
-        generated_content.append(generated_dict)
 
-        out = base64.encodestring(str(generated_content))
+        out = base64.encodestring(etree.tostring(openerp_tag))
 
         return self.write(cr, uid, ids, {
             'state': 'done', 'export_data_wizard_data': out,
