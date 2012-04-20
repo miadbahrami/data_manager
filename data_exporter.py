@@ -45,6 +45,19 @@ class DeExportDataWizard(osv.osv_memory):
                                                                  context=context)
                             temp_object_rel_name = temp_object._model._columns[ir_model_field.name]._obj
                             temp_object_rel_obj = self.pool.get(temp_object_rel_name)
+                            # Checking for Duplication
+                            iso_code_list = []
+                            temp_object_rel_id_list = temp_object_rel_obj.search(cr, uid, [], context=context)
+                            temp_object_rel_list = temp_object_rel_obj.browse(cr, uid, temp_object_rel_id_list, context=context)
+
+                            for temp_object_rel in temp_object_rel_list:
+                                iso_code_list.append(temp_object_rel.iso_code)
+
+                            if len(iso_code_list) > len(set(iso_code_list)):
+                                raise osv.except_osv(
+                                    (_('Warning')),
+                                    (_("iso_code field values of %s class must be unique" % ir_model_field.model)))
+
                             temp_object_rel = temp_object_rel_obj.browse(
                                 cr, uid, input_model[ir_model_field.name][0])
 
