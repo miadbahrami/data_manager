@@ -4,8 +4,8 @@ from lxml import etree
 from tools.translate import _
 
 
-class ExportDataWizard(osv.osv_memory):
-    _name = 'export.data.wizard'
+class DeExportDataWizard(osv.osv_memory):
+    _name = 'de.export_data_wizard'
     _inherit = 'ir.wizard.screen'
 
     def export_data(self, cr, uid, ids, context=None):
@@ -63,14 +63,14 @@ class ExportDataWizard(osv.osv_memory):
         out = base64.encodestring(etree.tostring(openerp_tag))
 
         return self.write(cr, uid, ids, {
-            'state': 'done', 'export_data_wizard_data': out,
+            'state': 'done', 'de_export_data_wizard_data': out,
             'name': "%s_data.xml" % model_name.replace('.', '_')
         }, context=context)
 
     _columns = {
         'name': fields.char('Filename', size=128, readonly=True),
         'ir_model_id': fields.many2one('ir.model', 'IR Model'),
-        'export_data_wizard_data': fields.binary('Export Data Wizard Data',
+        'de_export_data_wizard_data': fields.binary('Export Data Wizard Data',
                                                  readonly=True),
         'state': fields.selection([('init', 'init'), ('done', 'done')],
                                   'state', readonly=True),
@@ -78,4 +78,4 @@ class ExportDataWizard(osv.osv_memory):
 
     _defaults = {'state': 'init'}
 
-ExportDataWizard()
+DeExportDataWizard()
