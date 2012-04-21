@@ -15,6 +15,10 @@ class DeExportDataWizard(osv.osv_memory):
         input_model_obj = self.pool.get(model_name)
         input_model_id_list = input_model_obj.search(cr, uid, [],
                                                      context=context)
+        if not input_model_id_list:
+            raise osv.except_osv((_('Warning')),
+                ('There is no data for %s class' % model_name))
+
         input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
                                                 [], context=context)
 
@@ -75,7 +79,7 @@ class DeExportDataWizard(osv.osv_memory):
 
                     else:
                         try:
-                            # False field should not set, except boolean fields
+                            # False field should not set, except boolean fields and integers
                             if not input_model[ir_model_field.name] and ir_model_field.ttype not in ('boolean', 'integer'):
                                 raise KeyError
 
