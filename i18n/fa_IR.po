@@ -8,83 +8,83 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-21 20:58+0000\n"
 "PO-Revision-Date: 2012-04-21 20:58+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: <Amin Oruji>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: data_exporter
 #: view:de.export_data_wizard:0
-msgid "Compelete"
-msgstr "Compelete"
-
 #. module: data_exporter
+msgid "Compelete"
+msgstr "کامل کردن"
+
 #: model:ir.model,name:data_exporter.model_de_export_data_wizard
+#. module: data_exporter
 msgid "de.export_data_wizard"
 msgstr "de.export_data_wizard"
 
-#. module: data_exporter
 #: field:de.export_data_wizard,ir_model_id:0
+#. module: data_exporter
 msgid "IR Model"
-msgstr "IR Model"
+msgstr "مدل"
 
-#. module: data_exporter
 #: field:de.export_data_wizard,state:0
+#. module: data_exporter
 msgid "state"
-msgstr "state"
+msgstr "وضعیت"
 
-#. module: data_exporter
 #: field:de.export_data_wizard,name:0
+#. module: data_exporter
 msgid "Filename"
-msgstr "Filename"
+msgstr "نام فایل"
 
-#. module: data_exporter
 #: model:ir.ui.menu,name:data_exporter.de_export_data_wizard_menu
-msgid "Data Exporting"
-msgstr "Data Exporting"
-
 #. module: data_exporter
+msgid "Data Exporting"
+msgstr "برونش داده"
+
 #: selection:de.export_data_wizard,state:0
+#. module: data_exporter
 msgid "init"
 msgstr "init"
 
-#. module: data_exporter
 #: code:addons/data_exporter/data_exporter.py:19
 #: code:addons/data_exporter/data_exporter.py:62
 #: code:addons/data_exporter/data_exporter.py:73
+#. module: data_exporter
 #, python-format
 msgid "Warning"
-msgstr "Warning"
+msgstr "هشدار"
 
-#. module: data_exporter
 #: selection:de.export_data_wizard,state:0
+#. module: data_exporter
 msgid "done"
 msgstr "done"
 
-#. module: data_exporter
 #: model:ir.actions.act_window,name:data_exporter.de_export_data_wizard_form_action
+#. module: data_exporter
 msgid "DE Export Data Wizard"
-msgstr "DE Export Data Wizard"
+msgstr "راهنمای برونش داده"
 
-#. module: data_exporter
 #: view:de.export_data_wizard:0
+#. module: data_exporter
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "لغو"
 
-#. module: data_exporter
 #: view:de.export_data_wizard:0
+#. module: data_exporter
 msgid "Close"
-msgstr "Close"
+msgstr "بستن"
 
-#. module: data_exporter
 #: field:de.export_data_wizard,config_logo:0
-msgid "Image"
-msgstr "Image"
-
 #. module: data_exporter
+msgid "Image"
+msgstr "تصویر"
+
 #: field:de.export_data_wizard,de_export_data_wizard_data:0
+#. module: data_exporter
 msgid "Export Data Wizard Data"
-msgstr "Export Data Wizard Data"
+msgstr "داده"
 
