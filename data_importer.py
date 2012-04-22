@@ -11,7 +11,8 @@ class DmImportDataWizard(osv.osv_memory):
     def import_data(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids, context=context)[0]
         data_json = base64.decodestring(this.dm_import_data_wizard_data)
-        data_json = json.loads(data_json)
+        data_json = json.dumps(data_json)
+        data_json = eval(json.loads(data_json))
 
         model_list = set([data_record['model'] for data_record in data_json])
 
@@ -21,8 +22,16 @@ class DmImportDataWizard(osv.osv_memory):
             cr.execute("select setval(%s_id_seq, 1)" % model.replace('.', '_'))
 
         for data_record in data_json:
-            for data_field in data_record['fields']:
-                pass
+            k_list = []
+            v_list = []
+
+            for k, v in data_record['fields'].iteritems():
+                k_list.append(k)
+                v_list.append(v)
+
+            cr.execute("insert into %s %s values %s" %
+                       (data_record['model'].replace('.', '_')),
+                        str(tuple(k_list)), str(tuple(v_list)))
 
         return {}
 
