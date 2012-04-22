@@ -5,7 +5,7 @@
     'author': 'Amin Oruji',
     'depends': ['base'],
     'description': "Exporting module's data",
-    'update_xml': ['data_exporter.xml'],
+    'update_xml': ['data_exporter.xml', 'data_importer.xml'],
     'installable': True,
     'active': False,
 }
