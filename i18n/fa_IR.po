@@ -16,37 +16,37 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: data_exporter
-#: view:de.export.data.wizard:0
+#: view:dm.export.data.wizard:0
 msgid "Compelete"
 msgstr "Compelete"
 
 #. module: data_exporter
-#: model:ir.model,name:data_exporter.model_de_export_data_wizard
+#: model:ir.model,name:data_exporter.model_dm_export_data_wizard
 msgid "de.export_data_wizard"
 msgstr "de.export_data_wizard"
 
 #. module: data_exporter
-#: field:de.export.data.wizard,ir_model_id:0
+#: field:dm.export.data.wizard,ir_model_id:0
 msgid "IR Model"
 msgstr "IR Model"
 
 #. module: data_exporter
-#: field:de.export.data.wizard,state:0
+#: field:dm.export.data.wizard,state:0
 msgid "state"
 msgstr "state"
 
 #. module: data_exporter
-#: field:de.export.data.wizard,name:0
+#: field:dm.export.data.wizard,name:0
 msgid "Filename"
 msgstr "Filename"
 
 #. module: data_exporter
-#: model:ir.ui.menu,name:data_exporter.de_export_data_wizard_menu
+#: model:ir.ui.menu,name:data_exporter.dm_export_data_wizard_menu
 msgid "Data Exporting"
 msgstr "برونش داده"
 
 #. module: data_exporter
-#: selection:de.export.data.wizard,state:0
+#: selection:dm.export.data.wizard,state:0
 msgid "init"
 msgstr "init"
 
@@ -61,32 +61,32 @@ msgid "Warning"
 msgstr "هشدار"
 
 #. module: data_exporter
-#: selection:de.export.data.wizard,state:0
+#: selection:dm.export.data.wizard,state:0
 msgid "done"
 msgstr "done"
 
 #. module: data_exporter
-#: model:ir.actions.act_window,name:data_exporter.de_export_data_wizard_form_action
+#: model:ir.actions.act_window,name:data_exporter.dm_export_data_wizard_form_action
 msgid "DE Export Data Wizard"
 msgstr "راهنمای برونش داده"
 
 #. module: data_exporter
-#: view:de.export.data.wizard:0
+#: view:dm.export.data.wizard:0
 msgid "Cancel"
 msgstr "Cancel"
 
 #. module: data_exporter
-#: view:de.export.data.wizard:0
+#: view:dm.export.data.wizard:0
 msgid "Close"
 msgstr "Close"
 
 #. module: data_exporter
-#: field:de.export.data.wizard,config_logo:0
+#: field:dm.export.data.wizard,config_logo:0
 msgid "Image"
 msgstr "Image"
 
 #. module: data_exporter
-#: field:de.export.data.wizard,de_export_data_wizard_data:0
+#: field:dm.export.data.wizard,dm_export_data_wizard_data:0
 msgid "Export Data Wizard Data"
 msgstr "Export Data Wizard Data"
 

@@ -1,8 +1,8 @@
 <openerp>
 	<data>
-		<record id="de_export_data_wizard" model="ir.ui.view">
-			<field name="name">DE Export Data Wizard</field>
-			<field name="model">de.export.data.wizard</field>
+		<record id="dm_export_data_wizard" model="ir.ui.view">
+			<field name="name">DM Export Data Wizard</field>
+			<field name="model">dm.export.data.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="state" invisible="True" />
@@ -12,23 +12,23 @@
 					<button name="export_data" string="Compelete" type="object" icon="gtk-ok" />
 				</group>
 				<group states="done">
-					<field name="de_export_data_wizard_data" nolabel="1" colspan="4"
+					<field name="dm_export_data_wizard_data" nolabel="1" colspan="4"
 						filename="name" />
 					<button special="cancel" string="Close" icon="gtk-ok" />
 				</group>
 			</field>
 		</record>
 
-		<record id="de_export_data_wizard_form_action" model="ir.actions.act_window">
-			<field name="name">DE Export Data Wizard</field>
+		<record id="dm_export_data_wizard_form_action" model="ir.actions.act_window">
+			<field name="name">DM Export Data Wizard</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">de.export.data.wizard</field>
+			<field name="res_model">dm.export.data.wizard</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>
 		</record>
 
-		<menuitem id="de_export_data_wizard_menu" name="Data Exporting"
-			action="de_export_data_wizard_form_action" parent="base.menu_administration" />
+		<menuitem id="dm_export_data_wizard_menu" name="Data Exporting"
+			action="dm_export_data_wizard_form_action" parent="base.menu_administration" />
 	</data>
 </openerp>
