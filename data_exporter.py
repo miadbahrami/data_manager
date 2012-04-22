@@ -50,66 +50,68 @@ class DeExportDataWizard(osv.osv_memory):
             record_tag.attrib['model'] = model_name
 
             for ir_model_field in ir_model_id.field_id:
-                field_tag = etree.SubElement(record_tag, 'field')
-                field_tag.attrib['name'] = ir_model_field.name
+                # Checking for existing model name in input model
+                if ir_model_field.name in input_model:
+                    field_tag = etree.SubElement(record_tag, 'field')
+                    field_tag.attrib['name'] = ir_model_field.name
 
-                # data exporter doesn't support many2many field right now
-                if ir_model_field.ttype not in ['one2many', 'many2many']:
-                    if ir_model_field.ttype == 'many2one':
-                        temp_object_obj = self.pool.get(ir_model_field.model)
+                    # data exporter doesn't support many2many field right now
+                    if ir_model_field.ttype not in ['one2many', 'many2many']:
+                        if ir_model_field.ttype == 'many2one':
+                            temp_object_obj = self.pool.get(ir_model_field.model)
 
-                        if input_model[ir_model_field.name]:
-                            temp_object_id = input_model[ir_model_field.name][0]
+                            if input_model[ir_model_field.name]:
+                                temp_object_id = input_model[ir_model_field.name][0]
 
-                            temp_object = temp_object_obj.browse(cr, uid,
-                                                                 temp_object_id,
-                                                                 context=context)
-                            temp_object_rel_name = temp_object._model._columns[ir_model_field.name]._obj
-                            temp_object_rel_obj = self.pool.get(temp_object_rel_name)
+                                temp_object = temp_object_obj.browse(cr, uid,
+                                                                     temp_object_id,
+                                                                     context=context)
+                                temp_object_rel_name = temp_object._model._columns[ir_model_field.name]._obj
+                                temp_object_rel_obj = self.pool.get(temp_object_rel_name)
 
-                            ### Checking for Duplication of many2one field class iso_code content
-                            iso_code_list = []
-                            temp_object_rel_id_list = temp_object_rel_obj.search(cr, uid, [], context=context)
-                            temp_object_rel_list = temp_object_rel_obj.browse(
-                                cr, uid, temp_object_rel_id_list,
-                                context=context)
+                                ### Checking for Duplication of many2one field class iso_code content
+                                iso_code_list = []
+                                temp_object_rel_id_list = temp_object_rel_obj.search(cr, uid, [], context=context)
+                                temp_object_rel_list = temp_object_rel_obj.browse(
+                                    cr, uid, temp_object_rel_id_list,
+                                    context=context)
 
-                            for temp_object_rel in temp_object_rel_list:
-                                iso_code_list.append(temp_object_rel.iso_code)
+                                for temp_object_rel in temp_object_rel_list:
+                                    iso_code_list.append(temp_object_rel.iso_code)
 
-                            if len(iso_code_list) > len(set(iso_code_list)):
-                                raise osv.except_osv(
-                                    (_('Warning')),
-                                    (_("iso_code field values of %s class must be unique" % ir_model_field.model)))
-                            ###
+                                if len(iso_code_list) > len(set(iso_code_list)):
+                                    raise osv.except_osv(
+                                        (_('Warning')),
+                                        (_("iso_code field values of %s class must be unique" % ir_model_field.model)))
+                                ###
 
-                            ### check iso_code of many2one field class
-                            temp_object_rel = temp_object_rel_obj.browse(
-                                cr, uid, input_model[ir_model_field.name][0])
+                                ### check iso_code of many2one field class
+                                temp_object_rel = temp_object_rel_obj.browse(
+                                    cr, uid, input_model[ir_model_field.name][0])
 
+                                try:
+                                    temp_iso_code = temp_object_rel.iso_code
+
+                                except AttributeError:
+                                    raise osv.except_osv(
+                                        (_('Warning')),
+                                        (_("%s class doesn't have iso_code field!" %
+                                           ir_model_field.model)))
+                                ###
+
+                                field_tag.attrib['search'] = "[('iso_code', '=', %s)]" % temp_iso_code
+                                field_tag.attrib['model'] = temp_object_rel_name
+
+                        else:
                             try:
-                                temp_iso_code = temp_object_rel.iso_code
+                                # False field should not set, except boolean fields and integers
+                                if not input_model[ir_model_field.name] and ir_model_field.ttype not in ('boolean', 'integer'):
+                                    raise KeyError
 
-                            except AttributeError:
-                                raise osv.except_osv(
-                                    (_('Warning')),
-                                    (_("%s class doesn't have iso_code field!" %
-                                       ir_model_field.model)))
-                            ###
+                                field_tag.text = unicode(input_model[ir_model_field.name])
 
-                            field_tag.attrib['search'] = "[('iso_code', '=', %s)]" % temp_iso_code
-                            field_tag.attrib['model'] = temp_object_rel_name
-
-                    else:
-                        try:
-                            # False field should not set, except boolean fields and integers
-                            if not input_model[ir_model_field.name] and ir_model_field.ttype not in ('boolean', 'integer'):
-                                raise KeyError
-
-                            field_tag.text = unicode(input_model[ir_model_field.name])
-
-                        except KeyError:
-                            field_tag.text = ''
+                            except KeyError:
+                                field_tag.text = ''
 
         out = base64.encodestring(etree.tostring(openerp_tag))
 
