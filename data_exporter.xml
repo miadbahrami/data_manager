@@ -2,7 +2,7 @@
 	<data>
 		<record id="de_export_data_wizard" model="ir.ui.view">
 			<field name="name">DE Export Data Wizard</field>
-			<field name="model">de.export_data_wizard</field>
+			<field name="model">de.export.data.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="state" invisible="True" />
@@ -22,7 +22,7 @@
 		<record id="de_export_data_wizard_form_action" model="ir.actions.act_window">
 			<field name="name">DE Export Data Wizard</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">de.export_data_wizard</field>
+			<field name="res_model">de.export.data.wizard</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>

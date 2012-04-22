@@ -5,7 +5,7 @@ from tools.translate import _
 
 
 class DeExportDataWizard(osv.osv_memory):
-    _name = 'de.export_data_wizard'
+    _name = 'de.export.data.wizard'
     _inherit = 'ir.wizard.screen'
 
     def export_data(self, cr, uid, ids, context=None):
