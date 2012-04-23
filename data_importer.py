@@ -19,19 +19,24 @@ class DmImportDataWizard(osv.osv_memory):
         # Reset table
         for model in model_list:
             cr.execute("delete from %s" % model.replace('.', '_'))
-            cr.execute("select setval(%s_id_seq, 1)" % model.replace('.', '_'))
+            cr.execute("select setval('%s_id_seq', 1)" % model.replace('.', '_'))
 
         for data_record in data_json:
-            k_list = []
             v_list = []
+            k_str = ''
 
             for k, v in data_record['fields'].iteritems():
-                k_list.append(k)
+                k_str += "%s, " % str(k)
                 v_list.append(v)
 
-            cr.execute("insert into %s %s values %s" %
-                       (data_record['model'].replace('.', '_')),
-                        str(tuple(k_list)), str(tuple(v_list)))
+            k_str = k_str[:-2]
+            k_str = "(%s)" % k_str
+
+            cr.execute("insert into %s %s values %s" % (
+                data_record['model'].replace('.', '_'),
+                k_str,
+                str(tuple(v_list))
+            ))
 
         return {}
 
