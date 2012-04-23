@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* data_exporter
+#	* data_manager
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1-1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-22 11:09+0000\n"
-"PO-Revision-Date: 2012-04-22 11:09+0000\n"
+"POT-Creation-Date: 2012-04-23 21:51+0000\n"
+"PO-Revision-Date: 2012-04-23 21:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,78 +15,111 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: data_exporter
+#: model:ir.model,name:data_manager.model_dm_import_data_wizard
+#. module: data_manager
+msgid "dm.import.data.wizard"
+msgstr "درونش داده"
+
 #: view:dm.export.data.wizard:0
+#: view:dm.import.data.wizard:0
+#. module: data_manager
 msgid "Compelete"
-msgstr "Compelete"
+msgstr "کامل کردن"
 
-#. module: data_exporter
-#: model:ir.model,name:data_exporter.model_dm_export_data_wizard
-msgid "de.export_data_wizard"
-msgstr "de.export_data_wizard"
+#: field:dm.export.data.wizard,config_logo:0
+#: field:dm.import.data.wizard,config_logo:0
+#. module: data_manager
+msgid "Image"
+msgstr "تصویر"
 
-#. module: data_exporter
 #: field:dm.export.data.wizard,ir_model_id:0
+#. module: data_manager
 msgid "IR Model"
-msgstr "IR Model"
+msgstr "مدل"
 
-#. module: data_exporter
-#: field:dm.export.data.wizard,state:0
-msgid "state"
-msgstr "state"
-
-#. module: data_exporter
-#: field:dm.export.data.wizard,name:0
-msgid "Filename"
-msgstr "Filename"
-
-#. module: data_exporter
-#: model:ir.ui.menu,name:data_exporter.dm_export_data_wizard_menu
-msgid "Data Exporting"
+#: model:ir.model,name:data_manager.model_de_export_data_wizard
+#. module: data_manager
+msgid "de.export.data.wizard"
 msgstr "برونش داده"
 
-#. module: data_exporter
+#: model:ir.model,name:data_manager.model_dm_export_data_wizard
+#. module: data_manager
+msgid "dm.export.data.wizard"
+msgstr "برونش داده"
+
+#: field:dm.export.data.wizard,state:0
+#: field:dm.import.data.wizard,state:0
+#. module: data_manager
+msgid "state"
+msgstr "وضعیت"
+
+#: field:dm.export.data.wizard,name:0
+#. module: data_manager
+msgid "Filename"
+msgstr "نام فایل"
+
+#: model:ir.actions.act_window,name:data_manager.dm_import_data_wizard_form_action
+#. module: data_manager
+msgid "DM Import Data Wizard"
+msgstr "درونش داده"
+
+#: model:ir.ui.menu,name:data_manager.dm_export_data_wizard_menu
+#. module: data_manager
+msgid "Data Exporting"
+msgstr "برونش داده ها"
+
 #: selection:dm.export.data.wizard,state:0
+#: selection:dm.import.data.wizard,state:0
+#. module: data_manager
 msgid "init"
 msgstr "init"
 
-#. module: data_exporter
-#: code:addons/data_exporter/data_exporter.py:20
-#: code:addons/data_exporter/data_exporter.py:27
-#: code:addons/data_exporter/data_exporter.py:37
-#: code:addons/data_exporter/data_exporter.py:82
-#: code:addons/data_exporter/data_exporter.py:95
+#: code:addons/data_manager/data_exporter.py:22
+#. module: data_manager
 #, python-format
 msgid "Warning"
 msgstr "هشدار"
 
-#. module: data_exporter
 #: selection:dm.export.data.wizard,state:0
+#: selection:dm.import.data.wizard,state:0
+#. module: data_manager
 msgid "done"
 msgstr "done"
 
-#. module: data_exporter
-#: model:ir.actions.act_window,name:data_exporter.dm_export_data_wizard_form_action
-msgid "DE Export Data Wizard"
-msgstr "راهنمای برونش داده"
+#: field:dm.import.data.wizard,dm_import_data_wizard_data:0
+#. module: data_manager
+msgid "DM Import Data Wizard Data"
+msgstr "داده"
 
-#. module: data_exporter
+#: model:ir.ui.menu,name:data_manager.dm_import_data_wizard_menu
+#. module: data_manager
+msgid "Data Importing"
+msgstr "درونش داده ها"
+
 #: view:dm.export.data.wizard:0
+#: view:dm.import.data.wizard:0
+#. module: data_manager
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "لغو"
 
-#. module: data_exporter
 #: view:dm.export.data.wizard:0
+#: view:dm.import.data.wizard:0
+#. module: data_manager
 msgid "Close"
-msgstr "Close"
+msgstr "بستن"
 
-#. module: data_exporter
-#: field:dm.export.data.wizard,config_logo:0
-msgid "Image"
-msgstr "Image"
-
-#. module: data_exporter
 #: field:dm.export.data.wizard,dm_export_data_wizard_data:0
+#. module: data_manager
 msgid "Export Data Wizard Data"
-msgstr "Export Data Wizard Data"
+msgstr "داده"
+
+#: model:ir.actions.act_window,name:data_manager.dm_export_data_wizard_form_action
+#. module: data_manager
+msgid "DM Export Data Wizard"
+msgstr "برونش داده"
+
+#: model:ir.ui.menu,name:data_manager.data_manager_main_menu
+#. module: data_manager
+msgid "Data Management"
+msgstr "مدیریت داده ها"
 
