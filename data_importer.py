@@ -28,7 +28,11 @@ class DmImportDataWizard(osv.osv_memory):
             data_field['id'] = data_record['pk']
 
             for k, v in data_record['fields'].iteritems():
-                data_field[k] = v
+                if isinstance(v, list):
+                    data_field[k] = [(6, 0, v)]
+
+                else:
+                    data_field[k] = v
 
             my_object_obj.create(cr, uid, data_field, context=context)
 
