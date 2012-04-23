@@ -28,6 +28,6 @@
 		</record>
 
 		<menuitem id="dm_import_data_wizard_menu" name="Data Importing"
-			action="dm_import_data_wizard_form_action" parent="base.menu_administration" />
+			action="dm_import_data_wizard_form_action" parent="data_manager_main_menu" />
 	</data>
 </openerp>

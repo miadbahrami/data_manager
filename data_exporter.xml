@@ -1,5 +1,8 @@
 <openerp>
 	<data>
+		<menuitem id="data_manager_main_menu" name="Data Management"
+			parent="base.menu_administration" />
+
 		<record id="dm_export_data_wizard" model="ir.ui.view">
 			<field name="name">DM Export Data Wizard</field>
 			<field name="model">dm.export.data.wizard</field>
@@ -30,6 +33,6 @@
 		</record>
 
 		<menuitem id="dm_export_data_wizard_menu" name="Data Exporting"
-			action="dm_export_data_wizard_form_action" parent="base.menu_administration" />
+			action="dm_export_data_wizard_form_action" parent="data_manager_main_menu" />
 	</data>
 </openerp>
