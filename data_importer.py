@@ -17,7 +17,8 @@ class DmImportDataWizard(osv.osv_memory):
         # Reset table
         for model in model_list:
             cr.execute("delete from %s" % model.replace('.', '_'))
-            cr.execute("select setval('%s_id_seq', 1)" % model.replace('.', '_'))
+            cr.execute("select setval('%s_id_seq', 1)" %
+                       model.replace('.', '_'))
 
         data_field = {}
 

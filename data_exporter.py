@@ -41,9 +41,11 @@ class DmExportDataWizard(osv.osv_memory):
                 # Checking for existing model name in input model
                 if ir_model_field.name in input_model:
                     if ir_model_field.ttype == 'many2one':
-                        field_dict[ir_model_field.name] = input_model[ir_model_field.name][0]
+                        field_dict[ir_model_field.name] = \
+                            input_model[ir_model_field.name][0]
                     else:
-                        field_dict[ir_model_field.name] = input_model[ir_model_field.name]
+                        field_dict[ir_model_field.name] = \
+                            input_model[ir_model_field.name]
 
             record_dict['fields'] = field_dict
             data_json.append(record_dict)
