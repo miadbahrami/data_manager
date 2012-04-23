@@ -21,22 +21,16 @@ class DmImportDataWizard(osv.osv_memory):
             cr.execute("delete from %s" % model.replace('.', '_'))
             cr.execute("select setval('%s_id_seq', 1)" % model.replace('.', '_'))
 
+        data_field = {}
+
         for data_record in data_json:
-            v_list = []
-            k_str = ''
+            my_object_obj = self.pool.get(data_record['model'])
+            data_field['id'] = data_record['pk']
 
             for k, v in data_record['fields'].iteritems():
-                k_str += "%s, " % str(k)
-                v_list.append(v)
+                data_field[k] = v
 
-            k_str = k_str[:-2]
-            k_str = "(%s)" % k_str
-
-            cr.execute("insert into %s %s values %s" % (
-                data_record['model'].replace('.', '_'),
-                k_str,
-                str(tuple(v_list))
-            ))
+            my_object_obj.create(cr, uid, data_field, context=context)
 
         return {}
 
