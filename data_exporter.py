@@ -28,11 +28,11 @@ class DmExportDataWizard(osv.osv_memory):
         ###
 
         data_json = []
-        record_dict = {}
         field_dict = {}
 
         # Iterating export model data
         for input_model in input_model_list:
+            record_dict = {}
             record_dict['pk'] = input_model['id']
             record_dict['model'] = model_name
 
