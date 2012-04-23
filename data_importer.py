@@ -1,7 +1,6 @@
 from osv import osv, fields
 import base64
 import json
-from tools.translate import _
 
 
 class DmImportDataWizard(osv.osv_memory):
@@ -11,8 +10,7 @@ class DmImportDataWizard(osv.osv_memory):
     def import_data(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids, context=context)[0]
         data_json = base64.decodestring(this.dm_import_data_wizard_data)
-        data_json = json.dumps(data_json)
-        data_json = eval(json.loads(data_json))
+        data_json = json.loads(data_json)
 
         model_list = set([data_record['model'] for data_record in data_json])
 
