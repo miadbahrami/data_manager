@@ -28,11 +28,11 @@ class DmExportDataWizard(osv.osv_memory):
         ###
 
         data_json = []
-        field_dict = {}
 
         # Iterating export model data
         for input_model in input_model_list:
             record_dict = {}
+            field_dict = {}
             record_dict['pk'] = input_model['id']
             record_dict['model'] = model_name
 
@@ -41,8 +41,8 @@ class DmExportDataWizard(osv.osv_memory):
                 # Checking for existing model name in input model
                 if ir_model_field.name in input_model:
                     field_dict[ir_model_field.name] = input_model[ir_model_field.name]
-                    record_dict['fields'] = field_dict
 
+            record_dict['fields'] = field_dict
             data_json.append(record_dict)
 
         out = base64.encodestring(json.dumps(data_json, indent=4))
