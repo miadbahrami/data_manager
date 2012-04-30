@@ -10,8 +10,12 @@ class DmExportDataWizard(osv.osv_memory):
 
     def export_data(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids, context=context)[0]
-        ir_model_id = this.ir_model_id
-        model_name = ir_model_id.model
+        # Getting Input values
+        export_type_input = this.dm_export_data_wizard_type
+        ir_model_id_input = this.ir_model_id
+        ir_module_module_input = this.ir_module_module_id
+
+        model_name = ir_model_id_input.model
 
         ### Getting Export model
         input_model_obj = self.pool.get(model_name)
@@ -37,7 +41,7 @@ class DmExportDataWizard(osv.osv_memory):
             record_dict['model'] = model_name
 
             # Iterating model fields
-            for ir_model_field in ir_model_id.field_id:
+            for ir_model_field in ir_model_id_input.field_id:
                 # Checking for existing model name in input model
                 if ir_model_field.name in input_model:
                     if ir_model_field.ttype == 'many2one':
