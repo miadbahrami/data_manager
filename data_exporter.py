@@ -15,8 +15,8 @@ class DmExportDataWizard(osv.osv_memory):
         ir_model_id_input = this.ir_model_id
         ir_module_module_input = this.ir_module_module_id
 
-        data_json = []
         json_exported_file_name = ''
+        data_json = []
         ir_model_list = []
 
         # Check for based on module
@@ -26,9 +26,19 @@ class DmExportDataWizard(osv.osv_memory):
             ir_model_id_list = ir_model_obj.search(cr, uid, [], context=context)
             ir_model_list2 = ir_model_obj.browse(cr, uid, ir_model_id_list,
                                                 context=context)
+
+            cr.execute("select table_name from information_schema.tables where table_type != 'VIEW'")
+            table_list = []
+            table_list2 = cr.fetchall()
+
+            for table in table_list2:
+                table_list.append(table[0])
+
+            # Separate choosed module models with loop because of function field
             for ir_model in ir_model_list2:
-                if ir_model.modules == ir_module_module_input.name:
+                if ir_model.modules == ir_module_module_input.name and ir_model.model.replace('.', '_') in table_list:
                     ir_model_list.append(ir_model)
+
 
         # Check for based on model
         elif export_type_input == 'a':
