@@ -35,8 +35,12 @@ class DmExportDataWizard(osv.osv_memory):
         for ir_model in ir_model_list:
             ### Getting Export model
             input_model_obj = self.pool.get(ir_model.model)
-            input_model_id_list = input_model_obj.search(cr, uid, [],
-                                                         context=context)
+
+            try:
+                input_model_id_list = input_model_obj.search(cr, uid, [],
+                                                             context=context)
+            except AttributeError, e:
+                print e.message
 
             if export_type_input == 'a':
                 # Checking for Empty data
@@ -44,7 +48,7 @@ class DmExportDataWizard(osv.osv_memory):
                     raise osv.except_osv((_('Warning')),
                         ('There is no data for %s class' % ir_model.model))
 
-            elif export_type_input == 'b':
+            elif export_type_input == 'b' and not input_model_id_list:
                 continue
 
             # Select * from ...
