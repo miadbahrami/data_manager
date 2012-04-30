@@ -37,10 +37,15 @@ class DmExportDataWizard(osv.osv_memory):
             input_model_obj = self.pool.get(ir_model.model)
             input_model_id_list = input_model_obj.search(cr, uid, [],
                                                          context=context)
-            # Checking for Empty data
-            if not input_model_id_list:
-                raise osv.except_osv((_('Warning')),
-                    ('There is no data for %s class' % ir_model.model))
+
+            if export_type_input == 'a':
+                # Checking for Empty data
+                if not input_model_id_list:
+                    raise osv.except_osv((_('Warning')),
+                        ('There is no data for %s class' % ir_model.model))
+
+            elif export_type_input == 'b':
+                continue
 
             # Select * from ...
             input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
@@ -55,7 +60,7 @@ class DmExportDataWizard(osv.osv_memory):
                 record_dict['model'] = ir_model.model
 
                 # Iterating model fields
-                for ir_model_field in ir_model_id_input.field_id:
+                for ir_model_field in ir_model.field_id:
                     # Checking for existing model name in input model
                     if ir_model_field.name in input_model:
                         if ir_model_field.ttype == 'many2one':
