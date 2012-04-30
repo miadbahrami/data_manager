@@ -13,9 +13,9 @@
 				<group states="init">
 					<group colspan="4">
 						<field name="dm_export_data_wizard_type" required="True" />
-						<field name="ir_model_id" required="True"
+						<field name="ir_model_id"
 							attrs="{'invisible': [('dm_export_data_wizard_type', '=', 'b')]}" />
-						<field name="ir_module_module_id" required="True"
+						<field name="ir_module_module_id"
 							attrs="{'invisible': [('dm_export_data_wizard_type', '=', 'a')]}" />
 					</group>
 					<group colspan="4">
