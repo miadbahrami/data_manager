@@ -72,6 +72,6 @@ class DmExportDataWizard(osv.osv_memory):
                                   'state', readonly=True),
     }
 
-    _defaults = {'state': 'init'}
+    _defaults = {'state': 'init', 'dm_export_data_wizard_type': 'b'}
 
 DmExportDataWizard()
