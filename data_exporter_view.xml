@@ -11,7 +11,11 @@
 				<field name="state" invisible="True" />
 				<field name="name" invisible="True" />
 				<group states="init">
-					<field name="ir_model_id" nolabel="1" required="True" colspan="4" />
+					<field name="dm_export_data_wizard_type" nolabel="1" required="True" />
+					<field name="ir_model_id" nolabel="1" required="True"
+						attrs="{'invisible': [('dm_export_data_wizard_type', '=', 'b')]}" />
+					<field name="ir_module_module_id" nolabel="1" required="True"
+						attrs="{'invisible': [('dm_export_data_wizard_type', '=', 'a')]}" />
 					<button special="cancel" string="Cancel" icon="gtk-cancel" />
 					<button name="export_data" string="Compelete" type="object" icon="gtk-ok" />
 				</group>
