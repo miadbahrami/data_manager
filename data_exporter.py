@@ -57,9 +57,15 @@ class DmExportDataWizard(osv.osv_memory):
             'name': "%s_data.json" % model_name.replace('.', '_')
         }, context=context)
 
+    EXPORT_TYPE = (('a', 'based on model'), ('b', 'based on module'))
+
     _columns = {
         'name': fields.char('Filename', size=128, readonly=True),
+        'dm_export_data_wizard_type': fields.selection(EXPORT_TYPE,
+            'DM Export Data Wizard Type'),
         'ir_model_id': fields.many2one('ir.model', 'IR Model'),
+        'ir_module_module_id': fields.many2one('ir.module.module',
+                                               'IR Module Module'),
         'dm_export_data_wizard_data': fields.binary('Export Data Wizard Data',
                                                  readonly=True),
         'state': fields.selection([('init', 'init'), ('done', 'done')],
