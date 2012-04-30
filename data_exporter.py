@@ -16,11 +16,12 @@ class DmExportDataWizard(osv.osv_memory):
         ir_module_module_input = this.ir_module_module_id
 
         data_json = []
-
+        json_exported_file_name = ''
         ir_model_list = []
 
         # Check for based on module
         if export_type_input == 'b':
+            json_exported_file_name = "%s_data.json" % ir_module_module_input.name
             ir_model_obj = self.pool.get('ir.model')
             ir_model_id_list = ir_model_obj.search(cr, uid, [], context=context)
             ir_model_list2 = ir_model_obj.browse(cr, uid, ir_model_id_list,
@@ -31,6 +32,7 @@ class DmExportDataWizard(osv.osv_memory):
 
         # Check for based on model
         elif export_type_input == 'a':
+            json_exported_file_name = "%s_data.json" % ir_model_id_input.model.replace('.', '_')
             ir_model_list.append(ir_model_id_input)
 
         for ir_model in ir_model_list:
@@ -90,8 +92,7 @@ class DmExportDataWizard(osv.osv_memory):
 
         return self.write(cr, uid, ids, {
             'state': 'done', 'dm_export_data_wizard_data': out,
-#            'name': "%s_data.json" % model_name.replace('.', '_')
-            'name': "harchi"
+            'name': json_exported_file_name
         }, context=context)
 
     EXPORT_TYPE = (('a', 'based on model'), ('b', 'based on module'))
