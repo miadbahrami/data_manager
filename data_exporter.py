@@ -22,11 +22,12 @@ class DmExportDataWizard(osv.osv_memory):
         # Check for based on module
         if export_type_input == 'b':
             ir_model_obj = self.pool.get('ir.model')
-            ir_model_id_list = ir_model_obj.search(cr, uid,
-                [('modules', '=', ir_module_module_input.name)],
-                context=context)
-            ir_model_list = ir_model_obj.browse(cr, uid, ir_model_id_list,
+            ir_model_id_list = ir_model_obj.search(cr, uid, [], context=context)
+            ir_model_list2 = ir_model_obj.browse(cr, uid, ir_model_id_list,
                                                 context=context)
+            for ir_model in ir_model_list2:
+                if ir_model.modules == ir_module_module_input.name:
+                    ir_model_list.append(ir_model)
 
         # Check for based on model
         elif export_type_input == 'a':
@@ -41,6 +42,7 @@ class DmExportDataWizard(osv.osv_memory):
                                                              context=context)
             except AttributeError, e:
                 print e.message
+                continue
 
             if export_type_input == 'a':
                 # Checking for Empty data
@@ -52,8 +54,11 @@ class DmExportDataWizard(osv.osv_memory):
                 continue
 
             # Select * from ...
-            input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
-                                                    [], context=context)
+            try:
+                input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
+                                                        [], context=context)
+            except AttributeError, e:
+                print e.message
             ###
 
             # Iterating export model data
@@ -68,8 +73,12 @@ class DmExportDataWizard(osv.osv_memory):
                     # Checking for existing model name in input model
                     if ir_model_field.name in input_model:
                         if ir_model_field.ttype == 'many2one':
-                            field_dict[ir_model_field.name] = \
-                                input_model[ir_model_field.name][0]
+                            try:
+                                field_dict[ir_model_field.name] = \
+                                    input_model[ir_model_field.name][0]
+                            except TypeError, e:
+                                print e.message
+                                continue
                         else:
                             field_dict[ir_model_field.name] = \
                                 input_model[ir_model_field.name]
