@@ -17,12 +17,11 @@ class DmImportDataWizard(osv.osv_memory):
         # Reset table
         for model in model_list:
             cr.execute("delete from %s" % model.replace('.', '_'))
-            cr.execute("select setval('%s_id_seq', 1)" %
+            cr.execute("select setval('%s_id_seq', 3)" %
                        model.replace('.', '_'))
 
-        data_field = {}
-
         for data_record in data_json:
+            data_field = {}
             my_object_obj = self.pool.get(data_record['model'])
             data_field['id'] = data_record['pk']
 
@@ -33,7 +32,10 @@ class DmImportDataWizard(osv.osv_memory):
                 else:
                     data_field[k] = v
 
-            my_object_obj.create(cr, uid, data_field, context=context)
+            required_id = data_field['id']
+            current_id = my_object_obj.create(cr, uid, data_field, context=context)
+            cr.execute("""update %s set id = %s where id = %s""" % (data_record['model'].replace('.', '_'), required_id, current_id))
+            cr.execute("SELECT setval('%s_id_seq', (SELECT MAX(id) FROM %s)+1)" % (model.replace('.', '_'), model.replace('.', '_')))
 
         return {}
 
