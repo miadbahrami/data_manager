@@ -46,9 +46,11 @@ class DmImportDataWizard(osv.osv_memory):
                     data_field[k] = v
 
             required_id = data_field['id']
-            current_id = my_object_obj.create(cr, uid, data_field, context=context)
-            cr.execute("""update %s set id = %s where id = %s""" % (data_record['model'].replace('.', '_'), required_id, current_id))
-            cr.execute("SELECT setval('%s_id_seq', (SELECT MAX(id) FROM %s)+1)" % (model.replace('.', '_'), model.replace('.', '_')))
+            cr.execute("SELECT setval('%s_id_seq', (%s)-1)" % (model.replace('.', '_'), required_id))
+            my_object_obj.create(cr, uid, data_field, context=context)
+#            current_id = my_object_obj.create(cr, uid, data_field, context=context)
+#            cr.execute("""update %s set id = %s where id = %s""" % (data_record['model'].replace('.', '_'), required_id, current_id))
+#            cr.execute("SELECT setval('%s_id_seq', (SELECT MAX(id) FROM %s)+1)" % (model.replace('.', '_'), model.replace('.', '_')))
 
         return {}
 
