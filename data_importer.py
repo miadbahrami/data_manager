@@ -28,7 +28,8 @@ class DmImportDataWizard(osv.osv_memory):
             for k, v in data_record['fields'].iteritems():
                 tmp_v = []
                 if my_object_obj._columns[k]._obj:
-                    relation_object_obj = self.pool.get(my_object_obj._columns[k]._obj)
+                    relation_object_obj = \
+                        self.pool.get(my_object_obj._columns[k]._obj)
 
                     if not isinstance(v, list):
                         tmp_v.append(v)
@@ -36,7 +37,9 @@ class DmImportDataWizard(osv.osv_memory):
                     else:
                         tmp_v = v
 
-                    if not relation_object_obj.search(cr, uid, [('id', 'in', tmp_v)], context=context):
+                    if not relation_object_obj.search(cr, uid,
+                                                      [('id', 'in', tmp_v)],
+                                                      context=context):
                         continue
 
                 if isinstance(v, list):
@@ -48,9 +51,11 @@ class DmImportDataWizard(osv.osv_memory):
             required_id = data_field['id']
 
             if required_id == 1:
-                cr.execute("""ALTER SEQUENCE %s_id_seq MINVALUE 0;""" % my_object_obj._table)
+                cr.execute("""ALTER SEQUENCE %s_id_seq MINVALUE 0;""" % \
+                               my_object_obj._table)
 
-            cr.execute("SELECT setval('%s_id_seq', (%s)-1)" % (my_object_obj._table, required_id))
+            cr.execute("SELECT setval('%s_id_seq', (%s)-1)" % \
+                           (my_object_obj._table, required_id))
             my_object_obj.create(cr, uid, data_field, context=context)
 
         return {}

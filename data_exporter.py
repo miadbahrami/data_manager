@@ -21,13 +21,16 @@ class DmExportDataWizard(osv.osv_memory):
 
         # Check for based on module
         if export_type_input == 'b':
-            json_exported_file_name = "%s_data.json" % ir_module_module_input.name
+            json_exported_file_name = "%s_data.json" % \
+                ir_module_module_input.name
             ir_model_obj = self.pool.get('ir.model')
-            ir_model_id_list = ir_model_obj.search(cr, uid, [], context=context)
+            ir_model_id_list = ir_model_obj.search(cr, uid, [],
+                                                   context=context)
             ir_model_list2 = ir_model_obj.browse(cr, uid, ir_model_id_list,
                                                 context=context)
 
-            cr.execute("select table_name from information_schema.tables where table_type != 'VIEW'")
+            cr.execute("""select table_name from information_schema.tables \
+where table_type != 'VIEW'""")
             table_list = []
             table_list2 = cr.fetchall()
 
@@ -36,13 +39,15 @@ class DmExportDataWizard(osv.osv_memory):
 
             # Separate choosed module models with loop because of function field
             for ir_model in ir_model_list2:
-                if ir_model.modules == ir_module_module_input.name and ir_model.model.replace('.', '_') in table_list:
+                if ir_model.modules == ir_module_module_input.name and \
+                    ir_model.model.replace('.', '_') in table_list:
                     ir_model_list.append(ir_model)
 
 
         # Check for based on model
         elif export_type_input == 'a':
-            json_exported_file_name = "%s_data.json" % ir_model_id_input.model.replace('.', '_')
+            json_exported_file_name = "%s_data.json" % \
+                ir_model_id_input.model.replace('.', '_')
             ir_model_list.append(ir_model_id_input)
 
         for ir_model in ir_model_list:
@@ -67,7 +72,8 @@ class DmExportDataWizard(osv.osv_memory):
 
             # Select * from ...
             try:
-                input_model_list = input_model_obj.read(cr, uid, input_model_id_list,
+                input_model_list = input_model_obj.read(cr, uid,
+                                                        input_model_id_list,
                                                         [], context=context)
             except AttributeError, e:
                 print e.message
