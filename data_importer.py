@@ -46,7 +46,11 @@ class DmImportDataWizard(osv.osv_memory):
                     data_field[k] = v
 
             required_id = data_field['id']
-            cr.execute("SELECT setval('%s_id_seq', (%s)-1)" % (model.replace('.', '_'), required_id))
+
+            if required_id == 1:
+                cr.execute("""ALTER SEQUENCE %s_id_seq MINVALUE 0;""" % my_object_obj._table)
+
+            cr.execute("SELECT setval('%s_id_seq', (%s)-1)" % (my_object_obj._table, required_id))
             my_object_obj.create(cr, uid, data_field, context=context)
 #            current_id = my_object_obj.create(cr, uid, data_field, context=context)
 #            cr.execute("""update %s set id = %s where id = %s""" % (data_record['model'].replace('.', '_'), required_id, current_id))
