@@ -26,6 +26,19 @@ class DmImportDataWizard(osv.osv_memory):
             data_field['id'] = data_record['pk']
 
             for k, v in data_record['fields'].iteritems():
+                tmp_v = []
+                if my_object_obj._columns[k]._obj:
+                    relation_object_obj = self.pool.get(my_object_obj._columns[k]._obj)
+
+                    if not isinstance(v, list):
+                        tmp_v.append(v)
+
+                    else:
+                        tmp_v = v
+
+                    if not relation_object_obj.search(cr, uid, [('id', 'in', tmp_v)], context=context):
+                        continue
+
                 if isinstance(v, list):
                     data_field[k] = [(6, 0, v)]
 
